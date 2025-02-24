@@ -123,6 +123,12 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
         && rm -rf /var/lib/apt/lists/* \
         && rm -rf /usr/share/doc/*
 
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends gdb zsh \
+    && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /usr/share/doc/*
+
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && npm install -g bun \
     && stack upgrade --force-download
